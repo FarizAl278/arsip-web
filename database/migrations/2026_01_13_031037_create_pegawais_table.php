@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pegawais', function (Blueprint $table) {
+        Schema::create('pegawai', function (Blueprint $table) {
             $table->id();
             $table->string('nip')->unique();
             $table->string('nama');
@@ -25,7 +25,8 @@ return new class extends Migration
             $table->string('nomor_berkas')->index('index_nomor_berkas');
             $table->integer('lemari');
             $table->integer('hambalan');
-            $table->bigInteger('masa_kerja');
+            $table->enum('jenis_pegawai', ['Pns', 'Non Pns Tetap', 'Non Pns Kontrak', 'Pensiun']);
+            $table->bigInteger(column: 'masa_kerja');
             $table->timestamps();
         });
     }
@@ -35,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pegawais');
+        Schema::dropIfExists('pegawai');
     }
 };
