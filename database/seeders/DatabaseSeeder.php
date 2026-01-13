@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(UnitPegawaiSeeder::class);
-
+        $this->call(UnitPegawaiSeeder::class,
+        PegawaiSeeder::class);
     }
 }
