@@ -18,15 +18,13 @@ return new class extends Migration
             $table->integer('thn_angkat');
             $table->date('tgl_lahir');
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
-            $table->foreignId('unit_pegawai_id')
-                ->constrained('tb_unit_pegawai')
-                ->cascadeOnDelete();
+            $table->string('unit_pegawai');
             $table->enum('sts_pegawai', ['tendik', 'dosen']);
             $table->string('nomor_berkas')->index('index_nomor_berkas');
             $table->integer('lemari');
             $table->integer('hambalan');
             $table->enum('jenis_pegawai', ['Pns', 'Non Pns Tetap', 'Non Pns Kontrak', 'Pensiun']);
-            $table->bigInteger(column: 'masa_kerja');
+            $table->bigInteger('masa_kerja');
             $table->timestamps();
         });
     }
