@@ -24,6 +24,8 @@ return new class extends Migration
             $table->integer('lemari');
             $table->integer('hambalan');
             $table->enum('jenis_pegawai', ['Pns', 'Non Pns Tetap', 'Non Pns Kontrak', 'Pensiun']);
+            $table->date('TMT')->nullable();
+            $table->date('tgl_pensiun')->nullable();
             $table->bigInteger('masa_kerja');
             $table->timestamps();
         });

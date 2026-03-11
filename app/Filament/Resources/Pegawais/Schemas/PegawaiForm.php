@@ -7,6 +7,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 class PegawaiForm
@@ -63,6 +64,7 @@ class PegawaiForm
                                 'Non Pns Kontrak' => 'Non PNS Kontrak',
                                 'Pensiun'         => 'Pensiun',
                             ])
+                            ->live()
                             ->required(),
 
                         Select::make('unit_pegawai')
@@ -81,6 +83,16 @@ class PegawaiForm
                             ->required()
                             ->placeholder("co: 32")
                             ->numeric(),
+
+                        DatePicker::make('TMT')
+                            ->label('TMT')
+                            ->visible(fn(Get $get) => in_array($get('jenis_pegawai'), ['Non Pns Tetap', 'Non Pns Kontrak']))
+                            ->required(fn(Get $get) => in_array($get('jenis_pegawai'), ['Non Pns Tetap', 'Non Pns Kontrak'])),
+
+                        DatePicker::make('tgl_pensiun')
+                            ->label('Tanggal Pensiun')
+                            ->visible(fn(Get $get) => $get('jenis_pegawai') === 'Pensiun')
+                            ->required(fn(Get $get) => $get('jenis_pegawai') === 'Pensiun'),
                     ])
                     ->columnSpanFull(),
 
