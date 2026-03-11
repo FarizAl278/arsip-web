@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class BerkasMasukResource extends Resource
 {
@@ -25,6 +26,11 @@ class BerkasMasukResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return BerkasMasukForm::configure($schema);
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return false;
     }
 
     public static function table(Table $table): Table

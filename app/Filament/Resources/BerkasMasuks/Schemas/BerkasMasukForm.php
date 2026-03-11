@@ -4,6 +4,7 @@ namespace App\Filament\Resources\BerkasMasuks\Schemas;
 
 use App\Models\Pegawai;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -21,8 +22,17 @@ class BerkasMasukForm
                     ->schema([
                         Select::make('nip')
                             ->label('Pegawai (Opsional)')
-                            ->options(Pegawai::pluck('nama', 'nip'))
-                            ->searchable(),
+                            ->searchable()
+                            ->getSearchResultsUsing(function (string $search) {
+                                return Pegawai::query()
+                                    ->where('nama', 'like', "%{$search}%")
+                                    ->orWhere('nip', 'like', "%{$search}%")
+                                    ->limit(50)
+                                    ->pluck('nama', 'nip');
+                            })
+                            ->getOptionLabelUsing(function ($value) {
+                                return Pegawai::where('nip', $value)->value('nama');
+                            }),
                     ])
                     ->columnSpanFull(),
 
@@ -66,11 +76,9 @@ class BerkasMasukForm
                     ->icon('heroicon-o-archive-box')
                     ->columns(2)
                     ->schema([
-                        TextInput::make('nama_penyimpan')
-                            ->label('Nama Penyimpan')
-                            ->required(),
-                        TextInput::make('locate')
-                            ->label('Lokasi')
+                        FileUpload::make('locate')
+                            ->label('Berkas')
+                            ->columnSpanFull()
                             ->required(),
                     ])
                     ->columnSpanFull(),

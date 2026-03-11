@@ -5,6 +5,7 @@ namespace App\Filament\Resources\BerkasMasuks\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -15,37 +16,62 @@ class BerkasMasuksTable
         return $table
             ->columns([
                 TextColumn::make('nip')
+                    ->label('NIP Pegawai')
+                    ->placeholder('Tidak untuk pegawai')
                     ->searchable(),
+
                 TextColumn::make('nomor_berkas')
+                    ->label('Nomor Berkas')
+                    ->badge()
+                    ->color('success')
                     ->searchable(),
-                TextColumn::make('tgl_agenda')
-                    ->searchable(),
+
                 TextColumn::make('perihal')
-                    ->searchable(),
-                TextColumn::make('tgl_berkas')
-                    ->date()
-                    ->sortable(),
+                    ->label('Perihal')
+                    ->searchable()
+                    ->limit(30)
+                    ->tooltip(fn($record) => $record->perihal),
+
                 TextColumn::make('asal_berkas')
+                    ->label('Asal Berkas')
                     ->searchable(),
-                TextColumn::make('tahun')
-                    ->numeric()
+
+                TextColumn::make('tgl_berkas')
+                    ->label('Tanggal Berkas')
+                    ->date('d M Y')
                     ->sortable(),
-                TextColumn::make('nama_penyimpan')
+
+                TextColumn::make('tgl_agenda')
+                    ->label('Tanggal Agenda')
+                    ->date('d M Y')
+                    ->sortable()
                     ->searchable(),
+
+                TextColumn::make('tahun')
+                    ->label('Tahun')
+                    ->sortable()
+                    ->badge()
+                    ->color('info'),
+
+                TextColumn::make('nama_penyimpan')
+                    ->label('Nama Penyimpan')
+                    ->icon(Heroicon::User)
+                    ->searchable(),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Dibuat')
+                    ->dateTime('d M Y, H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Diperbarui')
+                    ->dateTime('d M Y, H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
-            ])
-            ->recordActions([
-                EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
