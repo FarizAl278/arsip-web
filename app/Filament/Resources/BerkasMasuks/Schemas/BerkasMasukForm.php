@@ -78,6 +78,9 @@ class BerkasMasukForm
                     ->schema([
                         FileUpload::make('locate')
                             ->label('Berkas')
+                            ->downloadable()
+                            ->disk('public')
+                            ->directory('data_scan')
                             ->columnSpanFull()
                             ->required(),
                     ])
