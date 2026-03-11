@@ -60,6 +60,13 @@ class BerkasMasuksTable
                     ->icon(Heroicon::User)
                     ->searchable(),
 
+                TextColumn::make('locate')
+                    ->label('Berkas')
+                    ->getStateUsing(fn($record) => 'Lihat Dokumen')
+                    ->url(fn($record) => url("/storage/{$record->locate}"), shouldOpenInNewTab: true)
+                    ->color('primary')
+                    ->icon('heroicon-o-document-text'),
+
                 TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime('d M Y, H:i')
@@ -79,6 +86,7 @@ class BerkasMasuksTable
                 [
                     DeleteAction::make(),
                     ViewAction::make('Detail')
+                        ->color('success')
                         ->icon(Heroicon::Eye)
                 ]
             )
