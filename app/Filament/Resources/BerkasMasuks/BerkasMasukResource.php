@@ -19,7 +19,7 @@ class BerkasMasukResource extends Resource
 {
     protected static ?string $model = BerkasMasuk::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::ArchiveBoxArrowDown;
 
     protected static ?string $recordTitleAttribute = 'Data Berkas Masuk';
 
