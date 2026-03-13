@@ -3,6 +3,7 @@
 namespace App\Filament\Actions;
 
 use App\Models\Layanan;
+use App\Filament\Services\LayananService;
 use Filament\Actions\BulkAction;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
@@ -95,35 +96,7 @@ class PinjamBerkasBulkAction
                     ->columnSpanFull(),
             ])
             ->action(function (Collection $records, array $data) {
-                $record = $records->first();
-
-                Layanan::create([
-                    'kode_berkas'    => $record->nomor_berkas,
-                    'status_berkas'  => $data['status_berkas'],
-                    'sifat_layanan'  => $data['status_berkas'],
-                    'sifat_lain'     => $data['sifat_lain'] ?? 'tidak',
-                    'berkas_layanan' => $data['berkas_layanan'],
-                    'berkas_lain'    => $data['berkas_lain'] ?? 'tidak',
-                    'nama'           => $data['nama'],
-                    'subdit'         => $data['subdit'],
-                    'unit_kerja'     => $data['unit_kerja'],
-                    'seksi'          => $data['seksi'],
-                    'operator'       => Auth::user()->name,
-                    'tanggal'        => now(),
-                    'kembali'        => null,
-                    'internal'       => $data['internal'],
-                    'jenis_pegawai'  => $record->jenis_pegawai,
-                ]);
-
-                $layanan = $data['berkas_layanan'] === 'Berkas Tertentu'
-                    ? $data['berkas_lain']
-                    : $data['berkas_layanan'];
-
-                Notification::make()
-                    ->title('Peminjaman Berhasil')
-                    ->body("Berkas pegawai <strong>{$record->nomor_berkas}</strong> dipinjam <strong>{$layanan}</strong>.")
-                    ->success()
-                    ->send();
+                LayananService::pinjamBerkas($records, $data);
             });
     }
 }
