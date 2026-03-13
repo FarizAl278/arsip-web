@@ -6,6 +6,7 @@ use App\Models\Layanan;
 use Filament\Actions\BulkAction;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Illuminate\Support\Collection;
 use Filament\Support\Icons\Heroicon;
@@ -113,6 +114,16 @@ class PinjamBerkasBulkAction
                     'internal'       => $data['internal'],
                     'jenis_pegawai'  => $record->jenis_pegawai,
                 ]);
+
+                $layanan = $data['berkas_layanan'] === 'Berkas Tertentu'
+                    ? $data['berkas_lain']
+                    : $data['berkas_layanan'];
+
+                Notification::make()
+                    ->title('Peminjaman Berhasil')
+                    ->body("Berkas pegawai <strong>{$record->nomor_berkas}</strong> dipinjam <strong>{$layanan}</strong>.")
+                    ->success()
+                    ->send();
             });
     }
 }
