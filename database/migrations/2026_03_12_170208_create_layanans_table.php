@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('operator');
             $table->date('tanggal');
             $table->string('keluar')->default('PERSONAL');
-            $table->date('kembali');
+            $table->date('kembali')->nullable();
             $table->enum('internal', ['Ya', 'Tidak'])->default('Ya');
             $table->string('jenis_pegawai');
             $table->timestamps();
