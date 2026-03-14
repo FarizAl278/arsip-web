@@ -148,6 +148,23 @@ class LayanansTable
                                 ->body('Berkas yang dipilih berhasil dikembalikan.')
                                 ->success()
                                 ->send();
+                        }),
+                    BulkAction::make('Batal Selesai Pinjam')
+                        ->icon(Heroicon::XMark)
+                        ->color('warning')
+                        ->requiresConfirmation()
+                        ->action(function (Collection $records, array $data) {
+                            foreach ($records as $record) {
+                                $record->update([
+                                    'kembali' => null
+                                ]);
+                            }
+
+                            Notification::make()
+                                ->title('Peminjaman Batal Diselesaikan')
+                                ->body('Berkas yang dipilih berhasil diubah.')
+                                ->success()
+                                ->send();
                         })
                 ]),
             ]);
