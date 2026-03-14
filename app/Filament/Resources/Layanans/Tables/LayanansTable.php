@@ -2,10 +2,14 @@
 
 namespace App\Filament\Resources\Layanans\Tables;
 
+use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Notifications\Notification;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Collection;
 
 class LayanansTable
 {
@@ -14,6 +18,8 @@ class LayanansTable
         return $table
             ->columns([
                 TextColumn::make('kode_berkas')
+                    ->copyable()
+                    ->icon(Heroicon::ClipboardDocument)
                     ->label('Kode Berkas')
                     ->searchable(),
 
@@ -21,7 +27,7 @@ class LayanansTable
                     ->label('Status Berkas')
                     ->searchable()
                     ->badge()
-                    ->color(fn ($state) => match ($state) {
+                    ->color(fn($state) => match ($state) {
                         'Pinjam Berkas'      => 'warning',
                         'Fotocopy Berkas'    => 'info',
                         'Lihat Ditempat'     => 'success',
@@ -31,14 +37,19 @@ class LayanansTable
                     }),
 
                 TextColumn::make('berkas_layanan')
-                    ->label('Cakupan Berkas')
+                    ->label('Berkas Layanan')
                     ->searchable(),
 
+                TextColumn::make('sifat_layanan')
+                    ->label('Sifat Layanan')
+                    ->searchable()
+                    ->toggleable(),
+
                 TextColumn::make('berkas_lain')
-                    ->label('Spesifikasi Berkas')
+                    ->label('Berkas Lain?')
                     ->searchable()
                     ->limit(25)
-                    ->tooltip(fn ($record) => $record->berkas_lain)
+                    ->tooltip(fn($record) => $record->berkas_lain)
                     ->placeholder('-'),
 
                 TextColumn::make('nama')
@@ -60,7 +71,7 @@ class LayanansTable
                 TextColumn::make('internal')
                     ->label('Internal SDM')
                     ->badge()
-                    ->color(fn ($state) => match ($state) {
+                    ->color(fn($state) => match ($state) {
                         'Ya'    => 'success',
                         'Tidak' => 'danger',
                         default => 'gray',
@@ -78,19 +89,15 @@ class LayanansTable
                     ->placeholder('Belum Kembali'),
 
                 TextColumn::make('operator')
+                    ->icon(Heroicon::User)
                     ->label('Operator')
                     ->searchable(),
 
-                TextColumn::make('sifat_layanan')
-                    ->label('Sifat Layanan')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
                 TextColumn::make('sifat_lain')
-                    ->label('Keterangan Layanan')
+                    ->label('Sifat Lain')
                     ->searchable()
                     ->limit(25)
-                    ->tooltip(fn ($record) => $record->sifat_lain)
+                    ->tooltip(fn($record) => $record->sifat_lain)
                     ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
 
@@ -125,6 +132,23 @@ class LayanansTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
+                    BulkAction::make('Selesai Pinjam')
+                        ->icon(Heroicon::ArchiveBoxArrowDown)
+                        ->color('success')
+                        ->requiresConfirmation()
+                        ->action(function (Collection $records, array $data) {
+                            foreach ($records as $record) {
+                                $record->update([
+                                    'kembali' => now()
+                                ]);
+                            }
+
+                            Notification::make()
+                                ->title('Peminjaman Diselesaikan')
+                                ->body('Berkas yang dipilih berhasil dikembalikan.')
+                                ->success()
+                                ->send();
+                        })
                 ]),
             ]);
     }
