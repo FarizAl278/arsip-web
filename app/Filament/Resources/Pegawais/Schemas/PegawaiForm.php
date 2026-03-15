@@ -36,8 +36,8 @@ class PegawaiForm
                         Select::make('jenis_kelamin')
                             ->label('Jenis Kelamin')
                             ->options([
-                                'laki-laki' => 'Laki-laki',
-                                'perempuan'  => 'Perempuan',
+                                'Laki-laki' => 'Laki-laki',
+                                'Perempuan'  => 'Perempuan',
                             ])
                             ->required()
                             ->columnSpan(1),

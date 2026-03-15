@@ -15,9 +15,8 @@ class PegawaiExporter extends Exporter
     public static function getColumns(): array
     {
         return [
-            ExportColumn::make('id')
-                ->label('ID'),
-            ExportColumn::make('nip'),
+            ExportColumn::make('nip')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
             ExportColumn::make('nama'),
             ExportColumn::make('thn_angkat'),
             ExportColumn::make('tgl_lahir'),
@@ -31,8 +30,6 @@ class PegawaiExporter extends Exporter
             ExportColumn::make('TMT'),
             ExportColumn::make('tgl_pensiun'),
             ExportColumn::make('masa_kerja'),
-            ExportColumn::make('created_at'),
-            ExportColumn::make('updated_at'),
         ];
     }
 

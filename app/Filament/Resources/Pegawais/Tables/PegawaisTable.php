@@ -10,6 +10,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ExportAction;
+use Filament\Actions\ExportBulkAction;
 use Filament\Actions\ImportAction;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
@@ -83,6 +84,12 @@ class PegawaisTable
             ])
             ->recordActions([
                 EditAction::make(),
+                EditAction::make()
+                    ->label("Detail")
+                    ->icon(Heroicon::Eye)
+                    ->color('success')
+                    ->modal()
+                    ->modalSubmitAction(false),
             ])
             ->headerActions([
                 ExportAction::make()
@@ -99,6 +106,11 @@ class PegawaisTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
+                    ExportBulkAction::make()
+                        ->exporter(PegawaiExporter::class)
+                        ->color('success')
+                        ->icon(Heroicon::ArrowUpTray)
+                        ->label('Export Data (yang dipilih)'),
                     PinjamBerkasBulkAction::make()
                 ]),
             ]);
