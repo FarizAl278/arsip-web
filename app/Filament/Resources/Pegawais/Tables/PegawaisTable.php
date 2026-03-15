@@ -3,10 +3,14 @@
 namespace App\Filament\Resources\Pegawais\Tables;
 
 use App\Filament\Actions\PinjamBerkasBulkAction;
+use App\Filament\Exports\PegawaiExporter;
+use App\Filament\Imports\PegawaiImporter;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
+use Filament\Actions\ImportAction;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
 use Filament\Support\Icons\Heroicon;
@@ -45,6 +49,7 @@ class PegawaisTable
                     ->badge()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('nomor_berkas')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('lemari')
                     ->numeric()
@@ -78,6 +83,18 @@ class PegawaisTable
             ])
             ->recordActions([
                 EditAction::make(),
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(PegawaiExporter::class)
+                    ->color('success')
+                    ->icon(Heroicon::ArrowUpTray)
+                    ->label('Export Data'),
+                ImportAction::make()
+                    ->importer(PegawaiImporter::class)
+                    ->color('primary')
+                    ->icon(Heroicon::ArrowDownTray)
+                    ->label('Import Data')
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

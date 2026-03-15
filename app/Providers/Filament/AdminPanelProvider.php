@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
+            ->databaseNotifications()
             ->colors([
                 'primary' => Color::Blue,
             ])
