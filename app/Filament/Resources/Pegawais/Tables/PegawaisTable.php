@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Pegawais\Tables;
 
 use App\Filament\Actions\PinjamBerkasBulkAction;
 use App\Filament\Exports\PegawaiExporter;
+use App\Filament\Forms\PegawaiDetail;
 use App\Filament\Imports\PegawaiImporter;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
@@ -12,6 +13,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ExportBulkAction;
 use Filament\Actions\ImportAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
 use Filament\Support\Icons\Heroicon;
@@ -84,10 +86,13 @@ class PegawaisTable
             ])
             ->recordActions([
                 EditAction::make(),
-                EditAction::make()
+                ViewAction::make()
                     ->label("Detail")
                     ->icon(Heroicon::Eye)
                     ->color('success')
+                    ->form(
+                        PegawaiDetail::schema()
+                    )
                     ->modal()
                     ->modalSubmitAction(false),
             ])
