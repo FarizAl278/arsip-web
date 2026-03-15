@@ -13,20 +13,20 @@ return new class extends Migration
     {
         Schema::create('pegawai', function (Blueprint $table) {
             $table->id();
-            $table->string('nip')->unique();
+            $table->string('nip')->index();
             $table->string('nama');
-            $table->integer('thn_angkat');
-            $table->date('tgl_lahir');
-            $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
-            $table->string('unit_pegawai');
-            $table->enum('sts_pegawai', ['tendik', 'dosen']);
+            $table->integer('thn_angkat')->nullable();
+            $table->string('tgl_lahir');
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
+            $table->string('unit_pegawai')->nullable();
+            $table->enum('sts_pegawai', ['tendik', 'dosen'])->nullable();
             $table->string('nomor_berkas')->index('index_nomor_berkas');
-            $table->integer('lemari');
-            $table->integer('hambalan');
+            $table->integer('lemari')->nullable();
+            $table->integer('hambalan')->nullable();
             $table->enum('jenis_pegawai', ['Pns', 'Non Pns Tetap', 'Non Pns Kontrak', 'Pensiun']);
-            $table->date('TMT')->nullable();
-            $table->date('tgl_pensiun')->nullable();
-            $table->bigInteger('masa_kerja');
+            $table->string('TMT')->nullable();
+            $table->string('tgl_pensiun')->nullable();
+            $table->bigInteger('masa_kerja')->nullable();
             $table->timestamps();
         });
     }

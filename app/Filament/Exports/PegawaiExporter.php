@@ -23,7 +23,8 @@ class PegawaiExporter extends Exporter
             ExportColumn::make('jenis_kelamin'),
             ExportColumn::make('unit_pegawai'),
             ExportColumn::make('sts_pegawai'),
-            ExportColumn::make('nomor_berkas'),
+            ExportColumn::make('nomor_berkas')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
             ExportColumn::make('lemari'),
             ExportColumn::make('hambalan'),
             ExportColumn::make('jenis_pegawai'),
