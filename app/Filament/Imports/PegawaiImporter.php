@@ -31,9 +31,7 @@ class PegawaiImporter extends Importer
                 ->requiredMapping()
                 ->rules(['required', 'max:255']),
 
-            ImportColumn::make('jenis_kelamin')
-                ->requiredMapping()
-                ->rules(['required']),
+            ImportColumn::make('jenis_kelamin'),
 
             ImportColumn::make('unit_pegawai')
                 ->rules(['max:255']),

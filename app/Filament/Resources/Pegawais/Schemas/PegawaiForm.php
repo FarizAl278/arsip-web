@@ -86,7 +86,6 @@ class PegawaiForm
 
                         DatePicker::make('TMT')
                             ->label('TMT')
-                            ->visible(fn(Get $get) => in_array($get('jenis_pegawai'), ['Non Pns Tetap', 'Non Pns Kontrak']))
                             ->required(fn(Get $get) => in_array($get('jenis_pegawai'), ['Non Pns Tetap', 'Non Pns Kontrak'])),
 
                         DatePicker::make('tgl_pensiun')

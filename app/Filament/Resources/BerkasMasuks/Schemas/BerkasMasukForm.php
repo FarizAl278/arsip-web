@@ -6,6 +6,7 @@ use App\Models\Pegawai;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -39,21 +40,23 @@ class BerkasMasukForm
                 Section::make('Detail Berkas')
                     ->description('Informasi utama mengenai berkas')
                     ->icon('heroicon-o-document-text')
-                    ->columns(2)
+                    ->columns(3)
                     ->schema([
                         TextInput::make('nomor_berkas')
                             ->label('Nomor Berkas')
-                            ->required(),
-                        TextInput::make('perihal')
-                            ->label('Perihal')
-                            ->required(),
-                        TextInput::make('asal_berkas')
-                            ->label('Asal Berkas')
                             ->required(),
                         TextInput::make('tahun')
                             ->label('Tahun')
                             ->required()
                             ->numeric(),
+                        TextInput::make('asal_berkas')
+                            ->label('Asal Berkas')
+                            ->required(),
+                        Textarea::make('perihal')
+                            ->columnSpanFull()
+                            ->rows(5)
+                            ->label('Perihal')
+                            ->required(),
                     ])
                     ->columnSpanFull(),
 
