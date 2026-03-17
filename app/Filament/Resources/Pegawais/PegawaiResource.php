@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class PegawaiResource extends Resource
 {
@@ -25,6 +26,11 @@ class PegawaiResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return PegawaiForm::configure($schema);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->orderBy('id', 'desc');
     }
 
     public static function table(Table $table): Table

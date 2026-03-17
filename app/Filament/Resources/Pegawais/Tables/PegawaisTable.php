@@ -61,7 +61,14 @@ class PegawaisTable
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('jenis_pegawai')
-                    ->badge(),
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'Pns' => 'success',
+                        'Non Pns Tetap' => 'primary',
+                        'Non Pns Kontrak' => 'warning',
+                        'Pensiun' => 'danger',
+                        default => 'gray',
+                    }),
                 TextColumn::make('masa_kerja')
                     ->numeric()
                     ->sortable()
@@ -75,15 +82,7 @@ class PegawaisTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                SelectFilter::make('jenis_pegawai')
-                    ->options([
-                        'Pns' => 'PNS',
-                        'Non Pns Tetap' => 'Non PNS Tetap',
-                        'Non Pns Kontrak' => 'Non PNS Kontrak',
-                        'Pensiun' => 'Pensiun',
-                    ]),
-            ])
+            ->filters([])
             ->recordActions([
                 EditAction::make(),
                 ViewAction::make()
