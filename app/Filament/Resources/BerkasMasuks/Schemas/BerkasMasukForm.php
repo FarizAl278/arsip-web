@@ -22,6 +22,7 @@ class BerkasMasukForm
                     ->icon('heroicon-o-user')
                     ->schema([
                         Select::make('nip')
+                            ->live()
                             ->label('Pegawai (Opsional)')
                             ->searchable()
                             ->getSearchResultsUsing(function (string $search) {
@@ -82,8 +83,14 @@ class BerkasMasukForm
                         FileUpload::make('locate')
                             ->label('Berkas')
                             ->downloadable()
+                            ->preserveFilenames()
                             ->disk('public')
-                            ->directory('data_scan')
+                            ->openable()
+                            ->previewable()
+                            ->directory(function ($get) {
+                                $nip = $get('nip');
+                                return $nip ? "data_scan/{$nip}" : 'data_scan';
+                            })
                             ->columnSpanFull()
                             ->required(),
                     ])
