@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Pegawais\Tables;
 
+use App\Filament\Actions\MutasiAction;
 use App\Filament\Actions\PinjamBerkasBulkAction;
 use App\Filament\Exports\PegawaiExporter;
 use App\Filament\Forms\PegawaiDetail;
@@ -18,6 +19,7 @@ use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\RecordActionsPosition;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
@@ -53,7 +55,7 @@ class PegawaisTable
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('nomor_berkas')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable(isIndividual: true),
                 TextColumn::make('lemari')
                     ->numeric()
                     ->sortable(),
@@ -85,6 +87,7 @@ class PegawaisTable
             ->filters([])
             ->recordActions([
                 EditAction::make(),
+                MutasiAction::recordAction(),
                 ViewAction::make()
                     ->label("Detail")
                     ->icon(Heroicon::Eye)
@@ -95,6 +98,7 @@ class PegawaisTable
                     ->modal()
                     ->modalSubmitAction(false),
             ])
+            ->actionsPosition(RecordActionsPosition::BeforeColumns)
             ->headerActions([
                 ExportAction::make()
                     ->exporter(PegawaiExporter::class)
@@ -110,6 +114,7 @@ class PegawaisTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
+                    MutasiAction::bulkAction(),
                     ExportBulkAction::make()
                         ->exporter(PegawaiExporter::class)
                         ->color('success')

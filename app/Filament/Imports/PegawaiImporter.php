@@ -28,8 +28,7 @@ class PegawaiImporter extends Importer
                 ->numeric(),
 
             ImportColumn::make('tgl_lahir')
-                ->requiredMapping()
-                ->rules(['required', 'max:255']),
+                ->rules(['max:255']),
 
             ImportColumn::make('jenis_kelamin'),
 
