@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Pegawais\Pages;
 
+use App\Filament\Actions\MutasiAction;
 use App\Filament\Resources\Pegawais\PegawaiResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
@@ -14,6 +15,7 @@ class EditPegawai extends EditRecord
     {
         return [
             DeleteAction::make(),
+            MutasiAction::recordAction(),
         ];
     }
 }
