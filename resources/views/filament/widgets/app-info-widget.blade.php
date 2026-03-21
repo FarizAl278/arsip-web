@@ -1,14 +1,26 @@
-<x-filament-widgets::widget>
+@php
+    $user = filament()->auth()->user();
+@endphp
+
+<x-filament-widgets::widget class="fi-account-widget">
     <x-filament::section>
-        <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-            <div class="flex flex-col items-start justify-between gap-2">
-                <p class="font-semibold text-balance text-gray-700 dark:text-gray-200">Aplikasi Layanan Arsip</p>
-                <p class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">
-                    v1.0.0
-                    <span>© Arsip DSDM IPB{{ date('Y') }}</span>
-                </p>
-            </div>
-            <a href="https://github.com/username/repo"
+          <img
+            src="https://ditsdm.ipb.ac.id/wp-content/uploads/2023/04/cropped-Logo-IPB-University_Vertical-Putih-180x180.png"
+            alt="Logo"
+            class="h-10 w-10 rounded-full object-contain"
+            loading="lazy"
+        />
+
+        <div class="fi-account-widget-main">
+            <h2 class="fi-account-widget-heading">
+                Aplikasi Layanan Arsip
+            <p class="fi-account-widget-user-name">
+                  <span class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">v1.0.0</span>
+                   <span>© {{ date('Y') }}</span>
+            </p>
+        </div>
+
+        <a href="https://github.com/alelawar/"
                target="_blank"
                rel="noopener"
                class="flex items-center gap-1.5 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">
@@ -17,6 +29,5 @@
                 </svg>
                 GitHub
             </a>
-        </div>
     </x-filament::section>
 </x-filament-widgets::widget>
