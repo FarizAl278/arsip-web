@@ -23,6 +23,7 @@ class UsersTable
                 IconColumn::make('is_admin')
                     ->boolean(),
                 TextColumn::make('email_verified_at')
+                    ->placeholder('Belum Verifikasi')
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('created_at')

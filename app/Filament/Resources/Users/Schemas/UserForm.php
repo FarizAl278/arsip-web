@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
@@ -14,17 +13,43 @@ class UserForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->required(),
+                    ->label('Full Name')
+                    ->required()
+                    ->maxLength(255)
+                    ->autocomplete('name'),
+
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Email Address')
                     ->email()
-                    ->required(),
-                Toggle::make('is_admin')
-                    ->required(),
-                DateTimePicker::make('email_verified_at'),
+                    ->required()
+                    ->maxLength(255)
+                    ->unique(ignoreRecord: true)
+                    ->autocomplete('email'),
+
+
                 TextInput::make('password')
+                    ->label('Password')
                     ->password()
-                    ->required(),
+                    ->required(fn(string $operation): bool => $operation === 'create')
+                    ->dehydrated(fn(?string $state): bool => filled($state))
+                    ->minLength(8)
+                    ->maxLength(255)
+                    ->revealable()
+                    ->autocomplete('new-password')
+                    ->confirmed()
+                    ->helperText('Minimum 8 characters'),
+
+                TextInput::make('password_confirmation')
+                    ->label('Confirm Password')
+                    ->password()
+                    ->required(fn(string $operation): bool => $operation === 'create')
+                    ->dehydrated(false)
+                    ->revealable()
+                    ->autocomplete('new-password'),
+
+                Toggle::make('is_admin')
+                    ->label('Admin')
+                    ->helperText('Nonaktifkan jika user bukan admin'),
             ]);
     }
 }
