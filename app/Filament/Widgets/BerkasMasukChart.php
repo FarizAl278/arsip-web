@@ -6,29 +6,55 @@ use App\Models\BerkasMasuk;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
 
-class Layanan extends ChartWidget
+class BerkasMasukChart extends ChartWidget
 {
     protected ?string $heading = 'Berkas Masuk per Bulan';
     protected ?string $description = 'Distribusi berkas masuk dalam tahun';
 
     protected static ?int $sort = 2;
 
-    protected function getData(): array
+    protected function getFilters(): ?array
     {
+        $tahunList = [];
+        $tahunMulai = 2022;
         $tahunSekarang = now()->year;
 
+        for ($t = $tahunSekarang; $t >= $tahunMulai; $t--) {
+            $tahunList[$t] = (string) $t;
+        }
+
+        return $tahunList;
+    }
+
+    protected function getData(): array
+    {
+        $tahun = $this->filter ?? now()->year;
+
+
         $data = BerkasMasuk::select(
-                DB::raw('MONTH(tgl_agenda) as bulan'),
-                DB::raw('COUNT(*) as total')
-            )
-            ->whereYear('tgl_agenda', $tahunSekarang)
+            DB::raw('MONTH(tgl_agenda) as bulan'),
+            DB::raw('COUNT(*) as total')
+        )
+            ->whereYear('tgl_agenda', $tahun)
             ->groupBy(DB::raw('MONTH(tgl_agenda)'))
             ->orderBy('bulan')
             ->pluck('total', 'bulan')
             ->toArray();
 
-        $bulanLabel = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun',
-                       'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+        $bulanLabel = [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'Mei',
+            'Jun',
+            'Jul',
+            'Agu',
+            'Sep',
+            'Okt',
+            'Nov',
+            'Des'
+        ];
 
         $totals = [];
         for ($i = 1; $i <= 12; $i++) {
