@@ -2,10 +2,14 @@
 
 namespace App\Filament\Resources\BerkasMasuks\Tables;
 
+use App\Filament\Exports\BerkasMasukExporter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
+use Filament\Actions\ExportBulkAction;
+use Filament\Actions\Exports\Models\Export;
 use Filament\Actions\ViewAction;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -82,6 +86,12 @@ class BerkasMasuksTable
             ->filters([
                 //
             ])
+            ->headerActions([
+                ExportAction::make()
+                    ->color('success')
+                    ->icon(Heroicon::ArrowUpTray)
+                    ->exporter(BerkasMasukExporter::class)
+            ])
             ->recordActions(
                 [
                     DeleteAction::make(),
@@ -93,6 +103,10 @@ class BerkasMasuksTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
+                    ExportBulkAction::make()
+                        ->color('success')
+                        ->icon(Heroicon::ArrowUpTray)
+                        ->exporter(BerkasMasukExporter::class)
                 ]),
             ]);
     }
