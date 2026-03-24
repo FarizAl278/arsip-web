@@ -15,8 +15,10 @@ class BerkasMasukExporter extends Exporter
     public static function getColumns(): array
     {
         return [
-            ExportColumn::make('nip'),
-            ExportColumn::make('nomor_berkas'),
+            ExportColumn::make('nip')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
+            ExportColumn::make('nomor_berkas')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
             ExportColumn::make('perihal'),
             ExportColumn::make('tgl_berkas'),
             ExportColumn::make('asal_berkas'),

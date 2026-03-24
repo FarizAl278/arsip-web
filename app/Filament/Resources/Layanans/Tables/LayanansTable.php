@@ -2,9 +2,12 @@
 
 namespace App\Filament\Resources\Layanans\Tables;
 
+use App\Filament\Exports\LayananExporter;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ExportAction;
+use Filament\Actions\ExportBulkAction;
 use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -129,6 +132,12 @@ class LayanansTable
             ->recordActions([
                 //
             ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(LayananExporter::class)
+                    ->color('success')
+                    ->icon(Heroicon::ArrowUpTray)
+            ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
@@ -165,7 +174,11 @@ class LayanansTable
                                 ->body('Berkas yang dipilih berhasil diubah.')
                                 ->success()
                                 ->send();
-                        })
+                        }),
+                    ExportBulkAction::make()
+                        ->exporter(LayananExporter::class)
+                        ->color('primary')
+                        ->icon(Heroicon::ArrowUpTray),
                 ]),
             ]);
     }
