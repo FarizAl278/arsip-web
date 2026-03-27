@@ -89,7 +89,7 @@ class BerkasMasukForm
                             ->previewable()
                             ->directory(function ($get) {
                                 $nip = $get('nip');
-                                return $nip ? "data_scan/{$nip}" : 'data_scan';
+                                return $nip ? "DataScan/{$nip}" : 'DataScan';
                             })
                             ->columnSpanFull()
                             ->required(),

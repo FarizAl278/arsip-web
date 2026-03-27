@@ -22,6 +22,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\RecordActionsPosition;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
 
 class PegawaisTable
 {
@@ -88,15 +89,20 @@ class PegawaisTable
             ->recordActions([
                 EditAction::make(),
                 MutasiAction::recordAction(),
-                ViewAction::make()
-                    ->label("Detail")
-                    ->icon(Heroicon::Eye)
-                    ->color('success')
-                    ->form(
-                        PegawaiDetail::schema()
-                    )
-                    ->modal()
-                    ->modalSubmitAction(false),
+                // ViewAction::make()
+                //     ->label("Detail")
+                //     ->icon(Heroicon::Eye)
+                //     ->color('success')
+                //     ->form(
+                //         PegawaiDetail::schema()
+                //     )
+                //     ->modal()
+                //     ->modalSubmitAction(false),
+                ViewAction::make('lihat_berkas')
+                    ->label('Lihat Berkas')
+                    ->modalHeading('Daftar File Data Scan')
+                    ->modalWidth('3xl')
+                    ->modalContent(fn($record) => view('components.modal-berkas', ['record' => $record]))
             ])
             ->actionsPosition(RecordActionsPosition::BeforeColumns)
             ->headerActions([
