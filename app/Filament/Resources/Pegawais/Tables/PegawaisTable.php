@@ -107,6 +107,7 @@ class PegawaisTable
                     })
                     ->modalHeading('Daftar File Data Scan')
                     ->modalWidth('5xl')
+                    ->icon(Heroicon::Eye)
                     ->modalContent(function ($record) {
                         $component = new ModalBerkas($record);
 

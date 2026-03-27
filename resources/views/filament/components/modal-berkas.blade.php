@@ -11,18 +11,18 @@
         @foreach([
                 'NIP' => ['value' => $record->nip, 'icon' => 'heroicon-o-identification'],
                 'Nama' => ['value' => $record->nama, 'icon' => 'heroicon-o-user'],
-                'Tanggal Lahir' => ['value' => \Carbon\Carbon::parse($record->tgl_lahir)->format('d/m/Y'), 'icon' => 'heroicon-o-calendar'],
+                'Tanggal Lahir' => ['value' => $record->tgl_lahir ?? '-', 'icon' => 'heroicon-o-calendar'],
                 'Jenis Kelamin' => ['value' => $record->jenis_kelamin, 'icon' => 'heroicon-o-user-circle'],
             ] as $label => $item)
-                <div class="flex flex-col gap-1">
-                    <p class="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1">
-                        <x-dynamic-component :component="$item['icon']" class="w-5 h-5" />
-                        {{ $label }}
-                    </p>
-                    <p class="text-sm text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-800 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700">
-                        {{ $item['value'] ?? '-' }}
-                    </p>
-                </div>
+                    <div class="flex flex-col gap-1">
+                        <p class="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1">
+                            <x-dynamic-component :component="$item['icon']" class="w-5 h-5" />
+                            {{ $label }}
+                        </p>
+                        <p class="text-sm text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-800 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700">
+                            {{ $item['value'] ?? '-' }}
+                        </p>
+                    </div>
         @endforeach
     </div>
 
@@ -36,15 +36,15 @@
                 'Lemari' => ['value' => $record->lemari, 'icon' => 'heroicon-o-archive-box'],
                 'Hambalan' => ['value' => $record->hambalan, 'icon' => 'heroicon-o-squares-2x2'],
             ] as $label => $item)
-                <div class="flex flex-col gap-1">
-                    <p class="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1">
-                        <x-dynamic-component :component="$item['icon']" class="w-5 h-5" />
-                        {{ $label }}
-                    </p>
-                    <p class="text-sm text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-800 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700">
-                        {{ $item['value'] ?? '-' }}
-                    </p>
-                </div>
+                    <div class="flex flex-col gap-1">
+                        <p class="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1">
+                            <x-dynamic-component :component="$item['icon']" class="w-5 h-5" />
+                            {{ $label }}
+                        </p>
+                        <p class="text-sm text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-800 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700">
+                            {{ $item['value'] ?? '-' }}
+                        </p>
+                    </div>
         @endforeach
     </div>
 </div>
