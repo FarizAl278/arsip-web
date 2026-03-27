@@ -7,6 +7,8 @@ use App\Filament\Actions\PinjamBerkasBulkAction;
 use App\Filament\Exports\PegawaiExporter;
 use App\Filament\Forms\PegawaiDetail;
 use App\Filament\Imports\PegawaiImporter;
+use App\View\Components\ModalBerkas;
+use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -98,11 +100,20 @@ class PegawaisTable
                 //     )
                 //     ->modal()
                 //     ->modalSubmitAction(false),
-                ViewAction::make('lihat_berkas')
+                Action::make('lihat_berkas')
                     ->label('Lihat Berkas')
+                    ->action(function ($record, $livewire) {
+                        // ga perlu action di sini, kita pake modalContent
+                    })
                     ->modalHeading('Daftar File Data Scan')
-                    ->modalWidth('3xl')
-                    ->modalContent(fn($record) => view('components.modal-berkas', ['record' => $record]))
+                    ->modalWidth('5xl')
+                    ->modalContent(function ($record) {
+                        $component = new ModalBerkas($record);
+
+                        return $component->render()->with($component->data());
+                    })
+                    ->modalSubmitAction(false)
+                    ->color('success'),
             ])
             ->actionsPosition(RecordActionsPosition::BeforeColumns)
             ->headerActions([
