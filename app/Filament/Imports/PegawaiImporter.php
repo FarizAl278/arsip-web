@@ -17,47 +17,24 @@ class PegawaiImporter extends Importer
     {
         return [
             ImportColumn::make('nip')
-                ->requiredMapping()
-                ->rules(['required', 'max:255'])
-                ->validationMessages([
-                    'required' => 'Kolom NIP wajib diisi.',
-                    'max'      => 'NIP maksimal 255 karakter.',
-                ]),
+                ->requiredMapping(),
 
             ImportColumn::make('nama')
-                ->requiredMapping()
-                ->rules(['required', 'max:255'])
-                ->validationMessages([
-                    'required' => 'Kolom Nama wajib diisi.',
-                    'max'      => 'Nama maksimal 255 karakter.',
-                ]),
+                ->requiredMapping(),
 
             ImportColumn::make('thn_angkat')
                 ->numeric(),
 
-            ImportColumn::make('tgl_lahir')
-                ->rules(['max:255'])
-                ->validationMessages([
-                    'max' => 'Tanggal lahir maksimal 255 karakter.',
-                ]),
+            ImportColumn::make('tgl_lahir'),
 
             ImportColumn::make('jenis_kelamin'),
 
-            ImportColumn::make('unit_pegawai')
-                ->rules(['max:255'])
-                ->validationMessages([
-                    'max' => 'Unit pegawai maksimal 255 karakter.',
-                ]),
+            ImportColumn::make('unit_pegawai'),
 
             ImportColumn::make('sts_pegawai'),
 
             ImportColumn::make('nomor_berkas')
-                ->requiredMapping()
-                ->rules(['required', 'max:255'])
-                ->validationMessages([
-                    'required' => 'Kolom Nomor Berkas wajib diisi.',
-                    'max'      => 'Nomor berkas maksimal 255 karakter.',
-                ]),
+                ->requiredMapping(),
 
             ImportColumn::make('lemari')
                 ->numeric(),
@@ -66,11 +43,7 @@ class PegawaiImporter extends Importer
                 ->numeric(),
 
             ImportColumn::make('jenis_pegawai')
-                ->requiredMapping()
-                ->rules(['required'])
-                ->validationMessages([
-                    'required' => 'Kolom Jenis Pegawai wajib diisi.',
-                ]),
+                ->requiredMapping(),
 
             ImportColumn::make('TMT'),
 
@@ -79,6 +52,21 @@ class PegawaiImporter extends Importer
             ImportColumn::make('masa_kerja')
                 ->numeric(),
         ];
+    }
+
+
+    private function isValidDate($date): bool
+    {
+        $date = trim($date);
+
+        // Cek format dengan regex
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            return false;
+        }
+
+        // Cek apakah tanggal valid
+        $parts = explode('-', $date);
+        return checkdate((int)$parts[1], (int)$parts[2], (int)$parts[0]);
     }
 
     /**
@@ -102,6 +90,15 @@ class PegawaiImporter extends Importer
         if (empty($this->data['jenis_pegawai'])) {
             throw new RowImportFailedException('Jenis pegawai wajib diisi.');
         }
+
+        if (empty($this->data['TMT'])) {
+            throw new RowImportFailedException('TMT pegawai wajib diisi.');
+        }
+
+        if (empty($this->data['thn_angkat'])) {
+            throw new RowImportFailedException('Tahun Angkat pegawai wajib diisi.');
+        }
+
 
         // --- Validasi jenis kelamin (hanya jika diisi) ---
         if (!empty($this->data['jenis_kelamin'])) {
@@ -128,6 +125,26 @@ class PegawaiImporter extends Importer
             throw new RowImportFailedException(
                 "Jenis pegawai '{$this->data['jenis_pegawai']}' tidak valid. Pilihan yang tersedia: {$valid}."
             );
+        }
+
+        // --- Validasi tgl_lahir (wajib diisi) ---
+        if (empty($this->data['tgl_lahir'])) {
+            throw new RowImportFailedException('Tanggal lahir wajib diisi.');
+        }
+
+        if (!strtotime($this->data['tgl_lahir'])) {
+            throw new RowImportFailedException(
+                "Format tanggal lahir tidak valid: '{$this->data['tgl_lahir']}'. Gunakan format YYYY-MM-DD."
+            );
+        }
+
+        // --- Validasi TMT (wajib diisi) ---
+        if (!empty($this->data['TMT'])) {
+            if (!$this->isValidDate($this->data['TMT'])) {
+                throw new RowImportFailedException(
+                    "Format tanggal TMT SK tidak valid. Gunakan format: YYYY-MM-DD (contoh: 2025-08-01)."
+                );
+            }
         }
 
         // --- Validasi nomor berkas unik (skip jika update record yang sama) ---
