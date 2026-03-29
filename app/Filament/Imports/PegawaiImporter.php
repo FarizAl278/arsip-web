@@ -51,6 +51,9 @@ class PegawaiImporter extends Importer
 
             ImportColumn::make('masa_kerja')
                 ->numeric(),
+
+            ImportColumn::make('tgl_mutasi_masuk'),
+            ImportColumn::make('tgl_mutasi_keluar'),
         ];
     }
 
@@ -132,6 +135,18 @@ class PegawaiImporter extends Importer
             throw new RowImportFailedException('Tanggal lahir wajib diisi.');
         }
 
+        if (!strtotime($this->data['tgl_mutasi_masuk'])) {
+            throw new RowImportFailedException(
+                "Format tanggal mutasi masuk tidak valid: '{$this->data['tgl_lahir']}'. Gunakan format YYYY-MM-DD."
+            );
+        }
+
+        if (!strtotime($this->data['tgl_mutasi_keluar'])) {
+            throw new RowImportFailedException(
+                "Format tanggal mutasi keluar tidak valid: '{$this->data['tgl_lahir']}'. Gunakan format YYYY-MM-DD."
+            );
+        }
+
         if (!strtotime($this->data['tgl_lahir'])) {
             throw new RowImportFailedException(
                 "Format tanggal lahir tidak valid: '{$this->data['tgl_lahir']}'. Gunakan format YYYY-MM-DD."
@@ -142,7 +157,7 @@ class PegawaiImporter extends Importer
         if (!empty($this->data['TMT'])) {
             if (!$this->isValidDate($this->data['TMT'])) {
                 throw new RowImportFailedException(
-                    "Format tanggal TMT SK tidak valid. Gunakan format: YYYY-MM-DD (contoh: 2025-08-01)."
+                    "Format tanggal TMT  tidak valid. Gunakan format: YYYY-MM-DD (contoh: 2025-08-01)."
                 );
             }
         }

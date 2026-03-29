@@ -74,6 +74,13 @@ class PegawaisTable
                         'Pensiun' => 'danger',
                         default => 'gray',
                     }),
+                TextColumn::make('tgl_mutasi_masuk')
+                    ->sortable()
+                    ->placeholder('Bukan Pegawai Mutasi'),
+                TextColumn::make('tgl_mutasi_keluar')
+                    ->sortable()
+                    ->placeholder('–')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('masa_kerja')
                     ->numeric()
                     ->sortable()

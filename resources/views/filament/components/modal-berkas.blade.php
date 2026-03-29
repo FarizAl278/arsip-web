@@ -12,6 +12,8 @@
                 'NIP' => ['value' => $record->nip, 'icon' => 'heroicon-o-identification'],
                 'Nama' => ['value' => $record->nama, 'icon' => 'heroicon-o-user'],
                 'Tanggal Lahir' => ['value' => $record->tgl_lahir ?? '-', 'icon' => 'heroicon-o-calendar'],
+                'Tanggal Mutasi Masuk' => ['value' => $record->tgl_mutasi_masuk ?? '-', 'icon' => 'heroicon-o-calendar'],
+                'Tanggal Mutasi Keluar' => ['value' => $record->tgl_mutasi_keluar ?? '-', 'icon' => 'heroicon-o-calendar'],
                 'Jenis Kelamin' => ['value' => $record->jenis_kelamin, 'icon' => 'heroicon-o-user-circle'],
             ] as $label => $item)
                     <div class="flex flex-col gap-1">

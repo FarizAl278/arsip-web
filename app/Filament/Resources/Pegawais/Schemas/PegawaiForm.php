@@ -88,6 +88,12 @@ class PegawaiForm
                             ->label('TMT')
                             ->required(fn(Get $get) => in_array($get('jenis_pegawai'), ['Non Pns Tetap', 'Non Pns Kontrak'])),
 
+                        DatePicker::make('tgl_mutasi_masuk')
+                            ->label('Tanggal Mutasi Masuk'),
+
+                        DatePicker::make('tgl_mutasi_keluar')
+                            ->label('Tanggal Mutasi Keluar'),
+
                         DatePicker::make('tgl_pensiun')
                             ->label('Tanggal Pensiun')
                             ->visible(fn(Get $get) => $get('jenis_pegawai') === 'Pensiun')
