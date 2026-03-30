@@ -58,6 +58,7 @@ class PinjamBerkasBulkAction
 
                         TextInput::make('berkas_lain')
                             ->label('Spesifikasi Berkas')
+                            ->autocomplete()
                             ->placeholder('Tuliskan berkas yang diminta...')
                             ->required(fn($get) => $get('berkas_layanan') === 'Berkas Tertentu')
                             ->hidden(fn($get) => $get('berkas_layanan') !== 'Berkas Tertentu'),

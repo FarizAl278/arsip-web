@@ -168,12 +168,14 @@ class PegawaiImporter extends Importer
         }
 
         // --- Validasi nomor berkas unik (skip jika update record yang sama) ---
+        // --- Validasi nomor berkas unik berdasarkan jenis_pegawai ---
         if (Pegawai::where('nomor_berkas', $this->data['nomor_berkas'])
-            ->where('nip', '!=', $this->data['nip'])
+            ->where('jenis_pegawai', $this->data['jenis_pegawai'])
+            ->where('nip', '!=', $this->data['nip']) // skip jika update record yang sama
             ->exists()
         ) {
             throw new RowImportFailedException(
-                "Nomor berkas '{$this->data['nomor_berkas']}' sudah digunakan oleh NIP lain."
+                "Nomor berkas '{$this->data['nomor_berkas']}' sudah digunakan untuk jenis pegawai '{$this->data['jenis_pegawai']}'."
             );
         }
     }

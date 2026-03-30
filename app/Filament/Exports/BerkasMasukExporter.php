@@ -20,9 +20,11 @@ class BerkasMasukExporter extends Exporter
             ExportColumn::make('nomor_berkas')
                 ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
             ExportColumn::make('perihal'),
-            ExportColumn::make('tgl_berkas'),
+            ExportColumn::make('tgl_berkas')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
             ExportColumn::make('asal_berkas'),
-            ExportColumn::make('tgl_agenda'),
+            ExportColumn::make('tgl_agenda')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
             ExportColumn::make('tahun'),
             ExportColumn::make('nama_penyimpan'),
             ExportColumn::make('locate'),

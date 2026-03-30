@@ -27,9 +27,11 @@ class LayananExporter extends Exporter
             ExportColumn::make('unit_kerja'),
             ExportColumn::make('seksi'),
             ExportColumn::make('operator'),
-            ExportColumn::make('tanggal'),
+            ExportColumn::make('tanggal')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
             ExportColumn::make('keluar'),
-            ExportColumn::make('kembali'),
+            ExportColumn::make('kembali')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
             ExportColumn::make('internal'),
             ExportColumn::make('jenis_pegawai'),
 
