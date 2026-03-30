@@ -135,16 +135,21 @@ class PegawaiImporter extends Importer
             throw new RowImportFailedException('Tanggal lahir wajib diisi.');
         }
 
-        if (!strtotime($this->data['tgl_mutasi_masuk'])) {
-            throw new RowImportFailedException(
-                "Format tanggal mutasi masuk tidak valid: '{$this->data['tgl_lahir']}'. Gunakan format YYYY-MM-DD."
-            );
+
+        if (!empty($this->data['tgl_mutasi_masuk'])) {
+            if (!strtotime($this->data['tgl_mutasi_masuk'])) {
+                throw new RowImportFailedException(
+                    "Format tanggal mutasi masuk tidak valid: '{$this->data['tgl_lahir']}'. Gunakan format YYYY-MM-DD."
+                );
+            }
         }
 
-        if (!strtotime($this->data['tgl_mutasi_keluar'])) {
-            throw new RowImportFailedException(
-                "Format tanggal mutasi keluar tidak valid: '{$this->data['tgl_lahir']}'. Gunakan format YYYY-MM-DD."
-            );
+        if (!empty($this->data['tgl_mutasi_keluar'])) {
+            if (!strtotime($this->data['tgl_mutasi_keluar'])) {
+                throw new RowImportFailedException(
+                    "Format tanggal mutasi keluar tidak valid: '{$this->data['tgl_lahir']}'. Gunakan format YYYY-MM-DD."
+                );
+            }
         }
 
         if (!strtotime($this->data['tgl_lahir'])) {

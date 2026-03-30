@@ -19,7 +19,8 @@ class PegawaiExporter extends Exporter
                 ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
             ExportColumn::make('nama'),
             ExportColumn::make('thn_angkat'),
-            ExportColumn::make('tgl_lahir'),
+            ExportColumn::make('tgl_lahir')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
             ExportColumn::make('jenis_kelamin'),
             ExportColumn::make('unit_pegawai'),
             ExportColumn::make('sts_pegawai'),
@@ -28,9 +29,16 @@ class PegawaiExporter extends Exporter
             ExportColumn::make('lemari'),
             ExportColumn::make('hambalan'),
             ExportColumn::make('jenis_pegawai'),
-            ExportColumn::make('TMT'),
-            ExportColumn::make('tgl_pensiun'),
+            ExportColumn::make('TMT')
+                ->label('TMT')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
+            ExportColumn::make('tgl_pensiun')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
             ExportColumn::make('masa_kerja'),
+            ExportColumn::make('tgl_mutasi_masuk')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
+            ExportColumn::make('tgl_mutasi_keluar')
+                ->formatStateUsing(fn(mixed $state) => "\t" . (string) $state),
         ];
     }
 
