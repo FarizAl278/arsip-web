@@ -14,6 +14,7 @@ use Filament\Actions\ViewAction;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
 
 class BerkasMasuksTable
 {
@@ -94,7 +95,14 @@ class BerkasMasuksTable
             ])
             ->recordActions(
                 [
-                    DeleteAction::make(),
+                    DeleteAction::make()
+                        ->action(function ($record) {
+                            if ($record->locate) {
+                                Storage::disk('public')->delete($record->locate);
+                            }
+
+                            $record->delete();
+                        }),
                     ViewAction::make('Detail')
                         ->color('success')
                         ->icon(Heroicon::Eye)
@@ -102,7 +110,17 @@ class BerkasMasuksTable
             )
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->action(function ($records) {
+                            foreach ($records as $record) {
+
+                                if ($record->locate) {
+                                    Storage::disk('public')->delete($record->locate);
+                                }
+
+                                $record->delete();
+                            }
+                        }),
                     ExportBulkAction::make()
                         ->color('success')
                         ->icon(Heroicon::ArrowUpTray)
