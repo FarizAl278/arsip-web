@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\RequestOtp;
+use App\Filament\Pages\Auth\ResetPasswordWithOtp;
+use App\Filament\Pages\Auth\VerifyOtp;
 use App\Filament\Widgets\AppInfoWidget;
 use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use Filament\Http\Middleware\Authenticate;
@@ -13,12 +16,12 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
@@ -41,6 +44,10 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Dashboard::class,
             ])
+            ->passwordReset(RequestOtp::class, ResetPasswordWithOtp::class)
+            ->routes(function (Panel $panel) {
+                Route::get('filament.admin.auth.password-reset.reset', VerifyOtp::class)->name('verify-otp');
+            })
             ->globalSearch(false)
             ->plugins([
                 EasyFooterPlugin::make()
