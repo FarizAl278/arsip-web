@@ -130,11 +130,11 @@ class PegawaisTable
                     ->color('success')
                     ->icon(Heroicon::ArrowUpTray)
                     ->label('Export Data'),
-                ImportAction::make()
-                    ->importer(PegawaiImporter::class)
-                    ->color('primary')
-                    ->icon(Heroicon::ArrowDownTray)
-                    ->label('Import Data')
+                // ImportAction::make()
+                //     ->importer(PegawaiImporter::class)
+                //     ->color('primary')
+                //     ->icon(Heroicon::ArrowDownTray)
+                //     ->label('Import Data')
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
